@@ -1,0 +1,34 @@
+.container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+
+.title {
+    font-weight: 400;
+}
+
+.dockbar {
+
+    &--container {
+        overflow: hidden;
+        border: 1px solid;
+        min-height: 20rem;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+    }
+
+    list-style-type: none;
+    display: flex;
+    justify-content: flex-start;
+    gap: 2rem;
+    align-items: center;
+    border: 2px solid;
+    width: 100vw;
+    padding: 0 10rem;
+
+}
