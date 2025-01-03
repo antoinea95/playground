@@ -18,9 +18,9 @@ const AppIcon = ({ name, imgSrc }: { name: string; imgSrc: string }) => {
     if (titleRef.current) {
       gsap.to(titleRef.current, {
         opacity: 1,
-        y: -40,
-        duration: 0.5,
-        ease: "power1.out",
+        y: -30,
+        duration: 0.2,
+        ease: "power1.in",
       });
     }
   });
@@ -29,8 +29,8 @@ const AppIcon = ({ name, imgSrc }: { name: string; imgSrc: string }) => {
     if (titleRef.current) {
       gsap.to(titleRef.current, {
         opacity: 0,
-        y: 30,
-        duration: 0.5,
+        y: 0,
+        duration: 0.2,
         ease: "power1.in",
       });
     }
@@ -47,11 +47,10 @@ const AppIcon = ({ name, imgSrc }: { name: string; imgSrc: string }) => {
         <span
           className={styles["appIcon--title"]}
           ref={titleRef}
-          style={{ opacity: 0, transform: "translateY(20px)" }} // Valeurs initiales
         >
           {name}
         </span>
-        <Image src={imgSrc} alt={`${name} logo`} width={80} height={80} className={styles["appIcon--img"]} ref={imageRef} id="dockbar-icon" />
+        <Image src={imgSrc} alt={`${name} logo`} width={70} height={70} className={styles["appIcon--img"]} ref={imageRef} id="dockbar-icon" />
       </Link>
     </li>
   );

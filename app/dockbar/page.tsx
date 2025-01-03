@@ -5,23 +5,41 @@ import AppIcon from "./AppIcon/AppIcon";
 import { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { IconData } from "./iconData";
 
 const Page = () => {
   const dockRef = useRef<HTMLUListElement>(null);
+  const dockContainerRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
   const [isHidden, setIsHidden] = useState(false);
+
+  useGSAP(() => {
+    const container = dockContainerRef.current;
+    const title = titleRef.current;
+
+    if(!title || !container) return;
+
+    const introTimeline = gsap.timeline();
+    introTimeline
+    .fromTo(title, { x: -400, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power1.out" })
+    .fromTo(container, {y: 500, opacity: 0}, {y: 0, opacity: 1, duration: 0.4, delay: 0.2, ease: "power1.out"});
+
+  }, [])
 
   const { contextSafe } = useGSAP(() => {
     const dock = dockRef.current;
-    if(!dock) return;
-
-    if(isHidden) gsap.set(dock, {y: 300});
-
-    gsap.set(dock, {y: 0})
+   
+    if (!dock) return;
+    if (isHidden) {
+      gsap.to(dock, { y: 300, duration: 0.2, ease: "power1.in" });
+    } else {
+      gsap.to(dock, { y: 0, duration: 0.2, ease: "power1.out" });
+    }
   }, [isHidden]);
 
   const handleHideDockBar = () => {
-    setIsHidden(!isHidden)
-  }
+    setIsHidden(!isHidden);
+  };
 
   const handleScaleIcon = contextSafe((e: React.MouseEvent) => {
     const dock = dockRef.current;
@@ -36,7 +54,7 @@ const Page = () => {
 
       const distance = Math.abs(mouseX - iconCenter);
 
-      const scale = Math.max(1, 1.5 - distance / 400);
+      const scale = Math.max(1, 1.4 - distance / 400);
 
       gsap.to(icon, {
         scale: scale,
@@ -60,35 +78,45 @@ const Page = () => {
     );
   });
 
-  const handleDockAppears = contextSafe(() => {
+  const handleDockAppears = contextSafe((e: React.MouseEvent) => {
+    const container = dockContainerRef.current;
     const dock = dockRef.current;
-    if (!dock) return;
-    gsap.to(dock, {y: 0, duration: 0.2})
-  })
+    if (!dock || !container || !isHidden) return;
+
+    const rect = container.getBoundingClientRect();
+    const bottomThreshold = rect.bottom - 10;
+    console.log(bottomThreshold, e.clientY);
+
+    if (e.clientY >= bottomThreshold) {
+      console.log(false);
+      gsap.to(dock, { y: 0, duration: 0.2 });
+    }
+
+    if (e.clientY <= bottomThreshold - 200) {
+      console.log(true);
+      gsap.to(dock, { y: 300, duration: 0.2 });
+    }
+  });
 
   const handleDockDissapears = contextSafe(() => {
     const dock = dockRef.current;
-    if (!dock) return;
-    gsap.to(dock, {y: 300, duration: 0.2})
-  })
+    if (!dock || !isHidden) return;
+    gsap.to(dock, { y: 300, duration: 0.2 });
+  });
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Macbook</h1>
-      <button onClick={handleHideDockBar}>{isHidden ? "Show dock" : "Hide dock"}</button>
-      <div className={styles["dockbar--container"]} onMouseEnter={handleDockAppears} onMouseLeave={handleDockDissapears}>
+      <h1 className={styles.title} ref={titleRef}>
+        The Mac Dockbar.
+      </h1>
+      <div className={styles["dockbar--container"]} ref={dockContainerRef} onMouseMove={handleDockAppears} onMouseLeave={handleDockDissapears}>
+        <button onClick={handleHideDockBar} className={styles["dockbar--toggle"]}>
+          {isHidden ? "Pinned dock" : "UnPinned dock"}
+        </button>
         <ul className={styles.dockbar} onMouseMove={handleScaleIcon} onMouseLeave={handleResetIcon} ref={dockRef}>
-          <AppIcon name="Notion" imgSrc="/dockbar/notion_logo.png" />
-          <AppIcon name="Asana" imgSrc="/dockbar/assana_logo.png" />
-          <AppIcon name="Slack" imgSrc="/dockbar/slack_logo.png" />
-          <AppIcon name="Loom" imgSrc="/dockbar/loom_logo.png" />
-          <AppIcon name="Spotify" imgSrc="/dockbar/spotify_logo.png" />
-          <AppIcon name="Webflow" imgSrc="/dockbar/webflow_logo.png" />
-          <AppIcon name="Osmo" imgSrc="/dockbar/osmo_logo.png" />
-          <AppIcon name="Illustrator" imgSrc="/dockbar/illustrator_logo.png" />
-          <AppIcon name="Figma" imgSrc="/dockbar/figma_logo.png" />
-          <AppIcon name="Photoshop" imgSrc="/dockbar/photoshop_logo.png" />
-          <AppIcon name="Premiere Pro" imgSrc="/dockbar/premierepro_logo.png" />
+          {IconData.map((icon) => (
+            <AppIcon name={icon.name} imgSrc={icon.imgSrc} key={icon.name} />
+          ))}
         </ul>
       </div>
     </div>
