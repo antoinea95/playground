@@ -7,13 +7,21 @@ import gsap from "gsap";
 import Link from "next/link";
 import { useGSAP } from "@gsap/react";
 
+/**
+ * Display an Application Icon with an image and a title that appears on hover
+ * @param {string} props.name - Name of the application
+ * @param {string} props.imgSrc - Path of the icon image
+ *
+ */
 const AppIcon = ({ name, imgSrc }: { name: string; imgSrc: string }) => {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const containerRef = useRef<HTMLLIElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
 
+  // Create a contextSafe to handle interaction with GSAP
   const { contextSafe } = useGSAP({ scope: containerRef });
 
+  // When mouse enter title appears et translate to the top
   const handleMouseEnter = contextSafe(() => {
     if (titleRef.current) {
       gsap.to(titleRef.current, {
@@ -25,6 +33,7 @@ const AppIcon = ({ name, imgSrc }: { name: string; imgSrc: string }) => {
     }
   });
 
+  // When mouse leave title disappears and translate to the bottom
   const handleMouseLeave = contextSafe(() => {
     if (titleRef.current) {
       gsap.to(titleRef.current, {
@@ -37,17 +46,9 @@ const AppIcon = ({ name, imgSrc }: { name: string; imgSrc: string }) => {
   });
 
   return (
-    <li
-      className={styles.appIcon}
-      ref={containerRef}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave} // Ajouter pour cacher au départ
-    >
+    <li className={styles.appIcon} ref={containerRef} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
       <Link href={"#"} className={styles["appIcon--link"]}>
-        <span
-          className={styles["appIcon--title"]}
-          ref={titleRef}
-        >
+        <span className={styles["appIcon--title"]} ref={titleRef}>
           {name}
         </span>
         <Image src={imgSrc} alt={`${name} logo`} width={70} height={70} className={styles["appIcon--img"]} ref={imageRef} id="dockbar-icon" />
