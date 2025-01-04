@@ -1,11 +1,10 @@
-import { ChallengeCard } from "./challenge/ChallengeCard";
+import { ChallengeCard } from "./components/challenge/ChallengeCard";
 import styles from "./page.module.scss";
 
-const challenge = {
-  pathname: "/dockbar",
-  name: "The Mac Dockbar.",
-  videoSrc: "/dockbar/dockbar_demo.mp4"
-}
+const challenges = [
+  { pathname: "/dockbar", name: "The Mac Dockbar.", videoSrc: "/dockbar/dockbar_demo.mp4" },
+  { pathname: "/looping-words", name: "Looping Words.", videoSrc: "/looping/looping_demo.mp4" },
+];
 
 export default function Home() {
   return (
@@ -20,9 +19,10 @@ export default function Home() {
         </p>
       </section>
       <section className={styles["home--challenges"]}>
-        <ChallengeCard challenge={challenge} />
+        {challenges.map((challenge) => (
+          <ChallengeCard challenge={challenge} key={challenge.pathname} />
+        ))}
       </section>
-     
     </main>
   );
 }

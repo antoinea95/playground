@@ -1,32 +1,19 @@
-'use client';
+"use client";
 
 import styles from "./page.module.scss";
-import AppIcon from "./AppIcon/AppIcon";
+import AppIcon from "../components/appIcon/AppIcon";
 import { useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { IconData } from "./iconData";
+import { ChallengePageLayout } from "../components/layout/ChallengePageLayout";
 
 const Page = () => {
   const dockRef = useRef<HTMLUListElement>(null);
   const dockContainerRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
 
   // Handle dock mode
   const [isHidden, setIsHidden] = useState(false);
-
-  // Entry animations
-  useGSAP(() => {
-    const container = dockContainerRef.current;
-    const title = titleRef.current;
-
-    if (!title || !container) return;
-
-    const introTimeline = gsap.timeline();
-    introTimeline
-      .fromTo(title, { x: -400, opacity: 0 }, { x: 0, opacity: 1, duration: 0.4, ease: "power1.out" })
-      .fromTo(container, { y: 500, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, delay: 0.2, ease: "power1.out" });
-  }, []);
 
   // Create a contextSafe to handle dock appearance
   const { contextSafe } = useGSAP(() => {
@@ -66,7 +53,8 @@ const Page = () => {
       gsap.to(icon, {
         scale: scale,
         y: -Math.max(0, 50 * (scale - 1)),
-        ease: "power1.out",
+        duration: 0.2,
+        ease: "linear",
       });
     });
   });
@@ -80,6 +68,7 @@ const Page = () => {
     icons.forEach((icon) =>
       gsap.to(icon, {
         scale: 1,
+        duration: 0.2,
         y: 0,
         ease: "power1.in",
       })
@@ -112,10 +101,7 @@ const Page = () => {
   });
 
   return (
-    <div className={styles.container}>
-      <h1 className={styles.title} ref={titleRef}>
-        The Mac Dockbar.
-      </h1>
+    <ChallengePageLayout title={"The Mac Dockbar."} number={1} date="03/01/2025" url="https://webflow.com/made-in-webflow/website/osmo-apple-dock" inspiration="Osmo Supply">
       <div className={styles["dockbar--container"]} ref={dockContainerRef} onMouseMove={handleDockAppears} onMouseLeave={handleDockDissapears}>
         <button onClick={handleHideDockBar} className={styles["dockbar--toggle"]}>
           {isHidden ? "Pinned dock" : "UnPinned dock"}
@@ -126,7 +112,7 @@ const Page = () => {
           ))}
         </ul>
       </div>
-    </div>
+    </ChallengePageLayout>
   );
 };
 

@@ -1,5 +1,6 @@
 .home {
-  padding: 10rem;
+
+  padding: 5rem;
 
   &--title {
     font-weight: 500;
@@ -16,5 +17,7 @@
 
   &--challenges {
     padding: 5rem 0;
+    display: flex;
+    gap: 3rem
   }
 }
