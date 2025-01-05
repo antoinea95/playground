@@ -17,7 +17,7 @@ export const ChallengePageLayout = ({
         <h1>{title}</h1>
         <p>n° 00{number}</p>
       </header>
-      <section className={styles["challenge--page__container"]}>{children}</section>
+      {children}
       <footer className={styles["challenge--page__footer"]}>
         <p>
           Inspiration: <Link href={url} target="_blank">{inspiration}</Link>

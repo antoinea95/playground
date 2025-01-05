@@ -23,13 +23,16 @@
 
 
 .challenge--page {
-    display: flex;
-    justify-content: center;
-    flex-flow: column;
     gap: 3rem;
+    padding: 10rem 0;
     max-width: 90vw;
     width: 85%;
     overflow: hidden;
+    height: fit-content;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
 
     &::before {
         content: " ";
@@ -77,16 +80,6 @@
         }
     }
 
-    &__container {
-        width: 100%;
-        max-height: 50rem;
-        flex: 1;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-        animation: slide-to-top 0.6s 0.6s ease-in-out both;
-    }
 
     &__footer {
         display: flex;
