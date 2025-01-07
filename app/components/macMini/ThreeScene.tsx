@@ -1,12 +1,14 @@
 "use client";
 
-import { Canvas, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
-import * as THREE from "three";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import styles from "../../macmini/page.module.scss";
+import { Canvas } from "@react-three/fiber";
+import { useLoader } from "@react-three/fiber";
+import * as THREE from "three";
+
 
 gsap.registerPlugin(ScrollTrigger);
 
