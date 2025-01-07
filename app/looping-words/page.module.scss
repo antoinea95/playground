@@ -1,12 +1,19 @@
+@use "../mixins.scss" as *;
+
 
 .looping {
 
     &--container {
         height: 50rem;
-        width: 100%;
+        width: 90%;
+        margin: 0 auto;
         background-color: #E3E1DD;
         position: relative;
-        overflow: hidden;     
+        overflow: hidden;   
+        
+        @include responsive(desktop) {
+            width: 100%;
+        }
     }
 
     &--fade {

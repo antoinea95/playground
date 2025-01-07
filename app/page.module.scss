@@ -1,23 +1,33 @@
-.home {
+@use "./mixins.scss" as *;
 
+.home {
   padding: 5rem;
 
   &--title {
     font-weight: 500;
     font-size: clamp(3rem, 15vw, 6rem);
     margin-bottom: 2rem;
+    color: white;
   }
 
   &--intro {
     font-weight: 400;
-    width: 70%;
-    font-size: clamp(1.2rem, 3vw, 2rem);
-    line-height: 35px;
+    width: 90%;
+    max-width: 80rem;
+    font-size: clamp(1.6rem, 3vw, 2rem);
+    line-height: 1.6em;
+    color: white;
   }
 
   &--challenges {
     padding: 5rem 0;
     display: flex;
-    gap: 3rem
+    flex-direction: column;
+    gap: 3rem;
+
+
+    @include responsive(desktop) {
+      flex-direction: row;
+    }
   }
 }

@@ -2,18 +2,27 @@
 
 import styles from "./page.module.scss";
 import AppIcon from "../components/appIcon/AppIcon";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { IconData } from "./iconData";
+import { IconDataDesktop, IconDataMobile } from "./iconData";
 import { ChallengePageLayout } from "../components/layout/ChallengePageLayout";
 
 const Page = () => {
   const dockRef = useRef<HTMLUListElement>(null);
   const dockContainerRef = useRef<HTMLDivElement>(null);
+  const [IconData, setIconData] = useState<{name: string, imgSrc: string}[]>([]);
 
   // Handle dock mode
   const [isHidden, setIsHidden] = useState(false);
+
+  useEffect(() => {
+    if(window.innerWidth > 1200) {
+      setIconData(IconDataDesktop)
+    } else {
+      setIconData(IconDataMobile);
+    }
+  }, [])
 
   // Create a contextSafe to handle dock appearance
   const { contextSafe } = useGSAP(() => {
@@ -107,7 +116,7 @@ const Page = () => {
           {isHidden ? "Pinned dock" : "UnPinned dock"}
         </button>
         <ul className={styles.dockbar} onMouseMove={handleScaleIcon} onMouseLeave={handleResetIcon} ref={dockRef}>
-          {IconData.map((icon) => (
+          {IconData.length > 0 && IconData.map((icon) => (
             <AppIcon name={icon.name} imgSrc={icon.imgSrc} key={icon.name} />
           ))}
         </ul>

@@ -5,7 +5,10 @@ import styles from "./_appIcon.module.scss";
 import { useRef } from "react";
 import gsap from "gsap";
 import Link from "next/link";
-import { useGSAP } from "@gsap/react";
+import { useGSAP } from '@gsap/react';
+
+gsap.registerPlugin(useGSAP);
+
 
 /**
  * Display an Application Icon with an image and a title that appears on hover
