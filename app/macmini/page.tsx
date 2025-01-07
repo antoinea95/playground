@@ -13,7 +13,7 @@ export default function Home() {
     <ChallengePageLayout
       title="Mac Mini Presentation."
       number={3}
-      date="05/01/2024"
+      date="07/01/2024"
       inspiration="Apple Mac mini page"
       url="https://www.apple.com/fr/mac-mini/"
     >
