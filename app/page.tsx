@@ -4,7 +4,8 @@ import styles from "./page.module.scss";
 const challenges = [
   { pathname: "/dockbar", name: "The Mac Dockbar.", videoSrc: "/dockbar/dockbar_demo.mp4" },
   { pathname: "/looping-words", name: "Looping Words.", videoSrc: "/looping/looping_demo.mp4" },
-  {pathname: "/macmini", name: "Mac mini presentation.", videoSrc: "/macmini/macmini_demo.mp4"}
+  {pathname: "/macmini", name: "Mac mini presentation.", videoSrc: "/macmini/macmini_demo.mp4"},
+  {pathname: "/side-menu", name: "Animated Side Menu.", videoSrc: "/side-menu/side-menu.mp4"},
 ];
 
 export default function Home() {
